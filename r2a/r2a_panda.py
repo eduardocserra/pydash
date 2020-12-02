@@ -34,21 +34,21 @@ class R2A_Panda(IR2A):
     def handle_segment_size_request(self, msg):
         self.request_time = time.perf_counter()
         x = 0
-        w = 0.3
+        w = 0.3 * 1000000
         k = 0.14  #0.04, 0.07, 0.14 até 0.56, aumentando 0.14
         E = 0.15
         if len(self.throughputs) == 1:
             x = self.throughputs[0]
         else:
-            x = (w - max((0, self.calc_throughputs[-1] /1000 - self.throughputs[-1] /1000 + w))
-                 ) * k * self.inter_request_time[-1] + self.calc_throughputs[-1] /1000
+            x = (w - max((0, self.calc_throughputs[-1] - self.throughputs[-1] + w))
+                 ) * k * self.inter_request_time[-1] + self.calc_throughputs[-1]
             self.calc_throughputs.append(x)
         
         print(f'real_throughput={self.throughputs}')
         print(f'calc_throughput={self.calc_throughputs}')
         selected_qi = self.qi[0]
         for i in self.qi:
-            if x * 1000 > i:
+            if x > i:
                 selected_qi = i
         print(f'qi={selected_qi}')
         msg.add_quality_id(selected_qi)
