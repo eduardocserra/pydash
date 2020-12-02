@@ -11,7 +11,9 @@ class R2A_Panda(IR2A):
         self.throughputs = []
         self.calc_throughputs = []
         self.smooth_throughputs = []
+        self.request_time = 0
         self.time_download = []
+        self.wait_time = 0
         self.inter_request_time = []
         self.qi = []
         self.seg_duration = 1
@@ -34,10 +36,11 @@ class R2A_Panda(IR2A):
         self.send_up(msg)
 
     def handle_segment_size_request(self, msg):
+        time.sleep(self.wait_time)
         self.request_time = time.perf_counter()
         x = 0
         w = 0.35 * 1000000
-        k = 0.14  #0.04, 0.07, 0.14 até 0.56, aumentando 0.14
+        k = 0.14  # 0.04, 0.07, 0.14 até 0.56, aumentando 0.14
         E = 0.15
         alfa = 0.2
         y = self.throughputs[0]
@@ -45,13 +48,13 @@ class R2A_Panda(IR2A):
             x = self.throughputs[0]
         else:
             x = abs((w - max((0, self.calc_throughputs[-1] - self.throughputs[-1] + w))
-                 ) * k * self.inter_request_time[-1] + self.calc_throughputs[-1])
+                     ) * k * self.inter_request_time[-1] + self.calc_throughputs[-1])
             y = -alfa * \
                 (self.smooth_throughputs[-1] - x) * \
                 self.inter_request_time[-1] + self.smooth_throughputs[-1]
             self.calc_throughputs.append(x)
             self.smooth_throughputs.append(y)
-            
+
         print(f'real_throughput={self.throughputs}')
         print(f'calc_throughput={self.calc_throughputs}')
         print(f'smooth_throughput={self.smooth_throughputs}')
@@ -71,10 +74,15 @@ class R2A_Panda(IR2A):
             B = (1 - msg.get_bit_length() /
                  self.calc_throughputs[0]) * self.seg_duration / beta + buffer_min
             print(f'B={B}')
-        target_inter_time = msg.get_bit_length() * self.seg_duration / self.calc_throughputs[-1] + beta * (B - buffer_min)
+        target_inter_time = msg.get_bit_length() * self.seg_duration / self.calc_throughputs[-1] + beta * (
+                    B - buffer_min)
         actual_inter_time = time.perf_counter() - self.request_time  # T~[n] próximo T~[n-1]
-        
-        self.inter_request_time.append(max((target_inter_time, actual_inter_time)))  #T[n] próximo T[n-1]
+        if actual_inter_time < target_inter_time:
+            self.wait_time = target_inter_time - actual_inter_time
+        else:
+            self.wait_time = 0
+
+        self.inter_request_time.append(max((target_inter_time, actual_inter_time)))  # T[n] próximo T[n-1]
         print(f'time={self.inter_request_time}')
         self.throughputs.append(msg.get_bit_length() * self.seg_duration / actual_inter_time)
         self.send_up(msg)
