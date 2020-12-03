@@ -36,10 +36,10 @@ class R2A_Panda(IR2A):
         self.send_up(msg)
 
     def handle_segment_size_request(self, msg):
-        time.sleep(self.wait_time)
+        #time.sleep(self.wait_time)
         self.request_time = time.perf_counter()
         x = 0
-        w = 0.35 * 1000000
+        w = 0.8 * 1000000
         k = 0.14  # 0.04, 0.07, 0.14 até 0.56, aumentando 0.14
         E = 0.15
         alfa = 0.2
@@ -49,9 +49,9 @@ class R2A_Panda(IR2A):
         else:
             x = abs((w - max((0, self.calc_throughputs[-1] - self.throughputs[-1] + w))
                      ) * k * self.inter_request_time[-1] + self.calc_throughputs[-1])
-            y = -alfa * \
+            y = abs(-alfa * \
                 (self.smooth_throughputs[-1] - x) * \
-                self.inter_request_time[-1] + self.smooth_throughputs[-1]
+                self.inter_request_time[-1] + self.smooth_throughputs[-1])
             self.calc_throughputs.append(x)
             self.smooth_throughputs.append(y)
 
@@ -67,7 +67,7 @@ class R2A_Panda(IR2A):
         self.send_down(msg)
 
     def handle_segment_size_response(self, msg):
-        buffer_min = 55
+        buffer_min = 50
         beta = 0.2
         B = self.whiteboard.get_amount_video_to_play()
         if len(self.throughputs) == 1:
