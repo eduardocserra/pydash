@@ -2,6 +2,7 @@ from r2a.ir2a import IR2A
 from player.parser import *
 import time
 from statistics import mean
+import sys
 
 
 class R2A_Panda(IR2A):
@@ -44,6 +45,16 @@ class R2A_Panda(IR2A):
         k = 0.14  # 0.04, 0.07, 0.14 até 0.56, aumentando 0.14
         E = 0.15
         alfa = 0.2
+
+        if len(sys.argv) >= 5:
+            w = float(sys.argv[1]) * 1000000
+            k = float(sys.argv[2])
+            E = float(sys.argv[3])
+            alfa = float(sys.argv[4])
+
+        print(w)
+
+
         y = self.throughputs[0]
         if len(self.throughputs) == 1:
             x = self.throughputs[0]
@@ -83,13 +94,18 @@ class R2A_Panda(IR2A):
 
         print(f'qi={self.selected_qi[-1]}')
 
-        self.quality_id.append(self.selected_qi[-1])
         msg.add_quality_id(self.selected_qi[-1])
         self.send_down(msg)
 
     def handle_segment_size_response(self, msg):
-        buffer_min = 50
+        
+        buffer_min = 20
         beta = 0.2
+
+        if len(sys.argv) >= 7:
+            buffer_min = float(sys.argv[5])
+            beta = float(sys.argv[6])
+
         B = self.whiteboard.get_amount_video_to_play()
         if len(self.throughputs) == 1:
             B = (1 - msg.get_bit_length() /
