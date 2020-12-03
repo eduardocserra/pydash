@@ -17,6 +17,7 @@ class R2A_Panda(IR2A):
         self.inter_request_time = []
         self.qi = []
         self.seg_duration = 1
+        self.selected_qi = []
 
     def handle_xml_request(self, msg):
         self.request_time = time.perf_counter()
@@ -36,7 +37,7 @@ class R2A_Panda(IR2A):
         self.send_up(msg)
 
     def handle_segment_size_request(self, msg):
-        time.sleep(self.wait_time)
+        # time.sleep(self.wait_time)
         self.request_time = time.perf_counter()
         x = 0
         w = 0.35 * 1000000
@@ -47,23 +48,43 @@ class R2A_Panda(IR2A):
         if len(self.throughputs) == 1:
             x = self.throughputs[0]
         else:
-            x = abs((w - max((0, self.calc_throughputs[-1] - self.throughputs[-1] + w))
-                     ) * k * self.inter_request_time[-1] + self.calc_throughputs[-1])
-            y = -alfa * \
-                (self.smooth_throughputs[-1] - x) * \
-                self.inter_request_time[-1] + self.smooth_throughputs[-1]
+            x = abs(
+                (w - max((0, self.calc_throughputs[-1] - self.throughputs[-1] + w))) * k * self.inter_request_time[-1] +
+                self.calc_throughputs[-1])
+            y = abs(
+                -alfa * (self.smooth_throughputs[-1] - x) * self.inter_request_time[-1] + self.smooth_throughputs[-1])
             self.calc_throughputs.append(x)
             self.smooth_throughputs.append(y)
 
         print(f'real_throughput={self.throughputs}')
         print(f'calc_throughput={self.calc_throughputs}')
         print(f'smooth_throughput={self.smooth_throughputs}')
-        selected_qi = self.qi[0]
+
+        selected_rup = self.qi[0]
+        selected_rdown = self.qi[0]
+
+        rup = y * (1 - E)
+        rdown = y
+
         for i in self.qi:
-            if y > i:
-                selected_qi = i
-        print(f'qi={selected_qi}')
-        msg.add_quality_id(selected_qi)
+            if rup > i:
+                selected_rup = i
+            if rdown > i:
+                selected_rdown = i
+
+        if len(self.selected_qi) == 0:
+            self.selected_qi.append(selected_rdown)
+        elif self.selected_qi[-1] < selected_rup:
+            self.selected_qi.append(selected_rup)
+        elif selected_rup <= self.selected_qi[-1] < selected_rdown:
+            self.selected_qi.append(self.selected_qi[-1])
+        else:
+            self.selected_qi.append(selected_rdown)
+
+        print(f'qi={self.selected_qi[-1]}')
+
+        self.quality_id.append(self.selected_qi[-1])
+        msg.add_quality_id(self.selected_qi[-1])
         self.send_down(msg)
 
     def handle_segment_size_response(self, msg):
@@ -75,7 +96,7 @@ class R2A_Panda(IR2A):
                  self.calc_throughputs[0]) * self.seg_duration / beta + buffer_min
             print(f'B={B}')
         target_inter_time = msg.get_bit_length() * self.seg_duration / self.calc_throughputs[-1] + beta * (
-                    B - buffer_min)
+                B - buffer_min)
         actual_inter_time = time.perf_counter() - self.request_time  # T~[n] próximo T~[n-1]
         if actual_inter_time < target_inter_time:
             self.wait_time = target_inter_time - actual_inter_time
