@@ -145,18 +145,18 @@ class R2A_Panda(IR2A):
         last_qi_index = self.qi.index(self.selected_qi[-1])
         decrease_bitrate = (1 - probability) * self.qi[max((0, last_qi_index - 1))]
         increase_bitrate = probability * self.qi[min((len(self.qi), last_qi_index + 1))]
-        new_qi = len(self.qi) - decrease_bitrate + increase_bitrate
-        index_qi = len(self.qi)
+        closest_qi = self.qi[-1] - decrease_bitrate + increase_bitrate
+        new_qi = len(self.qi)
         print(f'p={probability}')
         print(f'last_qi_index={last_qi_index}')
         print(f'decrease={decrease_bitrate}')
         print(f'increase={increase_bitrate}')
+        print(f'closest_qi={closest_qi}')
+        for bitrate in self.qi:
+            qi = bitrate - decrease_bitrate + increase_bitrate
+            if qi < closest_qi:
+                closest_qi = qi
+                new_qi = bitrate
+        print(f'closest_qi_selected={closest_qi}')
         print(f'new_qi={new_qi}')
-        for i in range(len(self.qi)):
-            qi = i - decrease_bitrate + increase_bitrate
-            if qi < new_qi:
-                new_qi = qi
-                index_qi = i
-        print(f'new_qi_selected={new_qi}')
-        print(f'index_qi={index_qi}')
-        return self.qi[i]
+        return new_qi
