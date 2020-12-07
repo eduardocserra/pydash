@@ -19,6 +19,7 @@ class R2A_Panda(IR2A):
         self.qi = []
         self.seg_duration = 1
         self.selected_qi = []
+        self.buffer_min = 20
 
     def handle_xml_request(self, msg):
         self.request_time = time.perf_counter()
@@ -45,15 +46,16 @@ class R2A_Panda(IR2A):
         k = 0.14  # 0.04, 0.07, 0.14 até 0.56, aumentando 0.14
         E = 0.15
         alfa = 0.2
+        limit_calc_throughput = False
 
         if len(sys.argv) >= 5:
             w = float(sys.argv[1]) * 1000000
             k = float(sys.argv[2])
             E = float(sys.argv[3])
             alfa = float(sys.argv[4])
-
-        print(w)
-
+        
+        if len(sys.argv) >= 8:
+            limit_calc_throughput = True
 
         y = self.throughputs[0]
         if len(self.throughputs) == 1:
@@ -61,15 +63,15 @@ class R2A_Panda(IR2A):
         else:
             x = abs((w - max((0, self.calc_throughputs[-1] - self.throughputs[-1] + w))
                      ) * k * self.inter_request_time[-1] + self.calc_throughputs[-1])
-            y = abs(-alfa * \
-                (self.smooth_throughputs[-1] - x) * \
-                self.inter_request_time[-1] + self.smooth_throughputs[-1])
+            if self.whiteboard.get_amount_video_to_play() < self.buffer_min and x > 4 * self.throughputs[-1] and limit_calc_throughput:
+                x = 4 * self.throughputs[-1]
+                y = 4 * self.throughputs[-1]
+            else:
+                y = abs(-alfa * \
+                    (self.smooth_throughputs[-1] - x) * \
+                    self.inter_request_time[-1] + self.smooth_throughputs[-1])
             self.calc_throughputs.append(x)
             self.smooth_throughputs.append(y)
-
-        print(f'real_throughput={self.throughputs}')
-        print(f'calc_throughput={self.calc_throughputs}')
-        print(f'smooth_throughput={self.smooth_throughputs}')
 
         selected_rup = self.qi[0]
         selected_rdown = self.qi[0]
@@ -92,27 +94,23 @@ class R2A_Panda(IR2A):
         else:
             self.selected_qi.append(selected_rdown)
 
-        print(f'qi={self.selected_qi[-1]}')
-
         msg.add_quality_id(self.selected_qi[-1])
         self.send_down(msg)
 
     def handle_segment_size_response(self, msg):
         
-        buffer_min = 20
         beta = 0.2
 
         if len(sys.argv) >= 7:
-            buffer_min = float(sys.argv[5])
+            self.buffer_min = float(sys.argv[5])
             beta = float(sys.argv[6])
 
         B = self.whiteboard.get_amount_video_to_play()
         if len(self.throughputs) == 1:
             B = (1 - msg.get_bit_length() /
-                 self.calc_throughputs[0]) * self.seg_duration / beta + buffer_min
-            print(f'B={B}')
+                 self.calc_throughputs[0]) * self.seg_duration / beta + self.buffer_min
         target_inter_time = msg.get_bit_length() * self.seg_duration / self.calc_throughputs[-1] + beta * (
-                B - buffer_min)
+                B - self.buffer_min)
         actual_inter_time = time.perf_counter() - self.request_time  # T~[n] próximo T~[n-1]
         if actual_inter_time < target_inter_time:
             self.wait_time = target_inter_time - actual_inter_time
@@ -120,7 +118,6 @@ class R2A_Panda(IR2A):
             self.wait_time = 0
 
         self.inter_request_time.append(max((target_inter_time, actual_inter_time)))  # T[n] próximo T[n-1]
-        print(f'time={self.inter_request_time}')
         self.throughputs.append(msg.get_bit_length() * self.seg_duration / actual_inter_time)
         self.send_up(msg)
 
