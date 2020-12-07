@@ -69,7 +69,7 @@ class R2A_Panda(IR2A):
         print(f'calc_throughput={self.calc_throughputs}')
         print(f'smooth_throughput={self.smooth_throughputs}')
 
-        if self.whiteboard.get_amount_video_to_play() < self.buffer_min and x > 3 * self.throughputs[-1]:
+        if len(self.throughputs) > 20:
             bitrate = self.__probability_change()
             print(f'bitrate={bitrate}')
             self.selected_qi.append(bitrate)
@@ -139,24 +139,29 @@ class R2A_Panda(IR2A):
     def __probability_change(self):
         throughput_mean = mean(self.throughputs)
         weight_variance = 0
+        weights = 0
         for i in range(len(self.throughputs)):
-            weight_variance += i / len(self.throughputs) * abs(self.throughputs[i] - throughput_mean)
+            weight_variance += i * abs(self.throughputs[i] - throughput_mean)
+            weights += i
+        weight_variance /= weights
+        print(f'mean={throughput_mean}\nvariance={weight_variance}')
         probability = throughput_mean / (throughput_mean + weight_variance)
         last_qi_index = self.qi.index(self.selected_qi[-1])
-        decrease_bitrate = (1 - probability) * self.qi[max((0, last_qi_index - 1))]
-        increase_bitrate = probability * self.qi[min((len(self.qi), last_qi_index + 1))]
-        closest_qi = self.qi[-1] - decrease_bitrate + increase_bitrate
+        decrease_bitrate = (1 - probability) * max((0, last_qi_index - 1))
+        increase_bitrate = probability * min((len(self.qi), last_qi_index + 1))
+        closest_qi = len(self.qi) - decrease_bitrate + increase_bitrate
         new_qi = len(self.qi)
+        print(f'qi={self.qi}')
         print(f'p={probability}')
         print(f'last_qi_index={last_qi_index}')
         print(f'decrease={decrease_bitrate}')
         print(f'increase={increase_bitrate}')
         print(f'closest_qi={closest_qi}')
-        for bitrate in self.qi:
-            qi = bitrate - decrease_bitrate + increase_bitrate
+        for i in range(len(self.qi)):
+            qi = i - decrease_bitrate + increase_bitrate
             if qi < closest_qi:
                 closest_qi = qi
-                new_qi = bitrate
+                new_qi = i
         print(f'closest_qi_selected={closest_qi}')
         print(f'new_qi={new_qi}')
-        return new_qi
+        return self.qi[new_qi]
