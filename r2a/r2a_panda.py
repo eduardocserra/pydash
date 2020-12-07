@@ -42,7 +42,7 @@ class R2A_Panda(IR2A):
         #time.sleep(self.wait_time)
         self.request_time = time.perf_counter()
         x = 0
-        w = 0.8 * 1000000
+        w = 0.35 * 1000000
         k = 0.14  # 0.04, 0.07, 0.14 até 0.56, aumentando 0.14
         E = 0.15
         alfa = 0.2
