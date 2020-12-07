@@ -48,13 +48,10 @@ class R2A_Panda(IR2A):
         alfa = 0.2
         limit_calc_throughput = False
 
-        if len(sys.argv) >= 5:
+        if len(sys.argv) >= 2:
             w = float(sys.argv[1]) * 1000000
-            k = float(sys.argv[2])
-            E = float(sys.argv[3])
-            alfa = float(sys.argv[4])
         
-        if len(sys.argv) >= 8:
+        if len(sys.argv) >= 4:
             limit_calc_throughput = True
 
         y = self.throughputs[0]
@@ -101,9 +98,8 @@ class R2A_Panda(IR2A):
         
         beta = 0.2
 
-        if len(sys.argv) >= 7:
-            self.buffer_min = float(sys.argv[5])
-            beta = float(sys.argv[6])
+        if len(sys.argv) >= 3:
+            self.buffer_min = float(sys.argv[2])
 
         B = self.whiteboard.get_amount_video_to_play()
         if len(self.throughputs) == 1:
