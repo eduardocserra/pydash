@@ -24,48 +24,55 @@
 %\ifcvprfinal\pagestyle{empty}\fi
 \setcounter{page}{1}
 \begin{document}
-
-\title{Departamento de Ciência da Computação -- Universidade de Brasília (UnB)\\
-  Brasília -- DF -- Brasil\\
-  Teleinformática e Redes 2 - \\
-}
-
-\author{
-Manoel Vieira C Neto\\ 
-Matrícula 180137816\\
-{\tt\small vieiranetoc@gmail.com}
-\and
-% adicionar os outros
-}
-\maketitle
-
-\begin{abstract}
-  
-
-\end{abstract}
-   
-\section{Objetivos}
-    
-%------------------------------------------------------------------------
-\section{Introdução}
-
- 
-%------------------------------------------------------------------------
-
-%------------------------------------------------------------------------
-
-
-%------------------------------------------------------------------------
-
-\section{Resultados}
-
-%------------------------------------------------------------------------
-
-\section{Discussão e Conclusões}
-
-{\small
-\bibliographystyle{ieee}
-\bibliography{egbib}
-}
-
+	
+	\title{Departamento de Ciência da Computação -- Universidade de Brasília (UnB)\\
+		Brasília -- DF -- Brasil\\
+		Teleinformática e Redes 2 - \\
+	}
+	
+	\author{
+		Manoel Vieira C Neto\\ 
+		Matrícula 180137816\\
+		{\tt\small vieiranetoc@gmail.com}
+		\and
+		% adicionar os outros
+	}
+	\maketitle
+	
+	\begin{abstract}
+		
+		
+	\end{abstract}
+	
+	\section{Objetivos}
+	Tem-se como objetivo do trabalho apresentado aqui implementar uma solução possa tornar possível o \textit{streaming} dentro dos conceitos da técnica MPEG-DASH. Como base teórica para a implementação proposta, usou-se como base outros trabalhos acerca do assunto para que se pudesse alcançar o resultado\cite{li2014probe}. 
+	%------------------------------------------------------------------------
+	\section{Introdução}
+	A popularização da internet trouxe consigo muitos avanços. Um dos mais importantes foi o aumento da banda, o qual possibilitou que multimídias (áudio e vídeo) fossem enviadas em segmentos maiores de dados através da rede, sem a necessidade de transportá-los em pacotes pequenos, como em redes de banda menor.
+	
+	Fazer \textit{streaming} via HTTP é vantajoso por uma série de aspectos principalmente por aproveitar-se da infraestrutura corrente da web\cite{niamut2016mpeg}. Por exemplo, CDNs (estrutura mais comum de distribuição de conteúdo) fazem cache informação HTTP em seus caches de borda e assim é possível reduzir a latência da entrega do pacote ao poder responder a requisição diretamente sem que ocorra pedidos desnecessários ao servidor de mídia. Outra vantagem é que sob o HTTP um cliente pode gerenciar o streaming localmente sem que mantenha um estado de sessão no servidor, o que também diminui o custo de escalar o serviço para muitos usuários.
+	
+	Um dos aspectos mais relevantes sobre \textit{streaming} é a continuidade da transmissão, de forma que mesmo que seja necessário uma redução na qualidade da mídia sendo recebida, ainda seja possível continuar sem que haja interrupções na entrega. Para que esse requisito seja cumprido, é necessário que servidor e cliente consigam trocar pacotes de forma adaptativa, isto é, de acordo com a velocidade que a conexão entre eles permite. Aqui apresentamos uma das possíveis implementações para esta entrega adaptativa entre servidor e cliente (DASH é um acrônimo para \textit{Dynamic Adaptative Streaming over HTTP}).
+	
+	Para a implementação do projeto, usamos como base o trabalho \textit{Probe and Adapt}\cite{li2014probe}.
+	
+	
+	%------------------------------------------------------------------------
+	
+	%------------------------------------------------------------------------
+	
+	
+	%------------------------------------------------------------------------
+	
+	\section{Resultados}
+	
+	%------------------------------------------------------------------------
+	
+	\section{Discussão e Conclusões}
+	
+	{\small
+		\bibliographystyle{ieee}
+		\bibliography{egbib}
+	}
+	
 \end{document}

@@ -1,26 +1,15 @@
 \begin{thebibliography}{1}\itemsep=-1pt
 
-\bibitem{thresholdopencv}
-Site opencv.
-\newblock
-  \url{https://docs.opencv.org/2.4/doc/tutorials/imgproc/threshold/threshold.html}.
+\bibitem{li2014probe}
+Z.~Li, X.~Zhu, J.~Gahm, R.~Pan, H.~Hu, A.~C. Begen, and D.~Oran.
+\newblock Probe and adapt: Rate adaptation for http video streaming at scale.
+\newblock {\em IEEE Journal on Selected Areas in Communications},
+  32(4):719--733, 2014.
 
-\bibitem{bmp}
-A.~Conci.
-\newblock {O FORMATO BMP DE ARMAZENAMENTO DE IMAGENS}.
-\newblock \url{http://www2.ic.uff.br/~aconci/curso/FormatoBMP.htm}.
-
-\bibitem{paulus2003applied}
-D.~Paulus and J.~Hornegger.
-\newblock {\em Applied pattern recognition: algorithms and implementation in
-  C++}.
-\newblock Springer Science \& Business Media, 2003.
-
-\bibitem{gaussianDaniel}
-D.~Rákos.
-\newblock Efficient gaussian blur with linear sampling.
-\newblock
-  \url{http://rastergrid.com/blog/2010/09/efficient-gaussian-blur-with-linear-sampling/},
-  2010.
+\bibitem{niamut2016mpeg}
+O.~A. Niamut, E.~Thomas, L.~D'Acunto, C.~Concolato, F.~Denoual, and S.~Y. Lim.
+\newblock Mpeg dash srd: spatial relationship description.
+\newblock In {\em Proceedings of the 7th International Conference on Multimedia
+  Systems}, pages 1--8, 2016.
 
 \end{thebibliography}
