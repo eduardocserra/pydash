@@ -112,7 +112,7 @@ class R2A_Panda(IR2A):
         if len(self.throughputs) == 1: # inicializa o valor do buffer, já que inicialmente, não há buffer
             B = (1 - msg.get_bit_length() /
                  self.calc_throughputs[0]) * self.seg_duration / beta + self.buffer_min
-        target_inter_time = msg.get_bit_length() * self.seg_duration / self.calc_throughputs[-1] + beta * (
+        target_inter_time = msg.get_bit_length() * self.seg_duration / self.smooth_throughputs[-1] + beta * (
                 B - self.buffer_min) # Equação 5
         actual_inter_time = time.perf_counter() - self.request_time  # T~[n] próximo T~[n-1]
 
