@@ -53,24 +53,18 @@
 		Manoel Vieira C Neto\\ 
 		Matrícula 18/0137816\\
 		\and
-		% adicionar os outros
-	}
-
-	\author{
+		
 		Eduardo Castro Serra\\ 
 		Matrícula 16/0005256\\
 		\and
-		% adicionar os outros
-	}
-
-	\author{
+		
 		Matheus Siade Ferreira\\ 
 		Matrícula 16/0036691\\
-		{\tt\small vieiranetoc@gmail.com}
 		\and
 		% adicionar os outros
 	}
-	\maketitle
+
+\maketitle
 	
 	\section{Objetivos}
 	Tem-se como objetivo do trabalho apresentado aqui implementar uma solução possa tornar possível o \textit{streaming} dentro dos conceitos da técnica MPEG-DASH. Como base teórica para a implementação proposta, usou-se como base outros trabalhos acerca do assunto para que se pudesse alcançar o resultado\cite{li2014probe}. 
@@ -97,23 +91,6 @@
 	Um dos grandes problemas da maior parte dos HAS é sua dificuldade em competir na rede com outros serviços provendo outros \textit{streamings}, onde a variação muito brusca do bitrate pode levar a uma má experiência de usuário e é bastante comum em HAS's compartilhando um mesmo \textit{link}. Este problema não é incidental e é decorrente do fato que estes outros algoritmos definem que o valor de Download corrente observado pelo cliente é tomado como a porcentagem de banda que ele tem disponível\cite{li2014probe}. O que não é necessariamente verdade.
 	
 	Ao invés de confiar apenas na informação recebida pelo cliente o trabalho de Li propõe uma solução baseada em "prova e adaptação", aqui a taxa de download do TCP é tomada como entrada, apenas quando for um indicador acurado da parcela justa da banda\cite{li2014probe}. Essa situação só ocorre caso a rede não esteja congestionada. Quando há tráfego limitante na rede, ou seja, quando há intervalos maiores entre as respostas, então o algoritmo submete varias provas à banda da rede para tentar prever qual a melhor taxa de transmissão. Com essa abordagem não é necessário constantes trocas de bitrate ao longo da transmissão uma vez que o algoritmo constantemente verifica qual o melhor bitrate de envio apenas analisando o tráfego da rede.
-	%------------------------------------------------------------------------
-	
-	%------------------------------------------------------------------------
-	
-	
-	%------------------------------------------------------------------------
-	
-	\section{Resultados}
-	
-	%------------------------------------------------------------------------
-	
-	\section{Discussão e Conclusões}
-	
-	{\small
-		\bibliographystyle{ieee}
-		\bibliography{egbib}
-	}
 	
 \section{Algoritmo ABR}
 O algoritmo implementado foi baseado no PANDA\cite{panda}. Esse algoritmo é divido em 4 etapas.
