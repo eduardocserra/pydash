@@ -1,5 +1,4 @@
 /venv/
-*.png
 r2a/r2afdash.py
 .DS_Store
 .idea/
@@ -8,3 +7,13 @@ r2a/r2afdash.py
 __pycache__/
 *.py[cod]
 *$py.class
+
+tex/egpaper_final.aux
+
+tex/egpaper_final.log
+
+tex/egpaper_final.pdf
+
+tex/egpaper_final.synctex.gz
+
+tex/egpaper_final.blg

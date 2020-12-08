@@ -331,179 +331,177 @@ Isso é implementado no método handle\_segment\_size\_response da classe com o 
 	if len(self.throughputs) == 1:
 	B = (1 - msg.get_bit_length() /
 	self.calc_throughputs[0]) * self.seg_duration / beta + buffer_min
-\end{lstlisting}
-\section{Resultados}
-\subsubsection{Ambiente de testes}
-Para testar o funcionamento do algoritmo foi feita uma série de testes utlizando variando valores de $w$ e buffer\_min. Os valores de k, E, alfa e beta foram escolhidos de acordo com o valor ótimo do relatório. Os valores escolhidos para teste foram: 
-\begin{itemize}
-	\item $w$ = 0.1, 0.3, 0.35, 0.45. 0.5, 0,6
-	\item buffer\_min  = 13, 20, 26, 35, 50
-	\item k=0.14 
-	\item E=0.15 
-	\item alfa=0.2
-	\item beta=0.2
-\end{itemize}
-\subsection{Algoritmo PANDA}
-Os primeiros testes realizados tinham como objetivo determinar o comportamento do algoritmo nas diferentes combinações de $w$ e b\_min propostas, utilizando os resultados emitidos pelo pydash para análise. A rede foi configurada como "LMH" como "traffic\_shaping\_profile\_sequence" e 5 de "traffic\_shaping\_profile\_interval". Os testes foram repetidos 3 vezes para reduzir o impacto da aleatóriedade do throughput nos dados. A análise dos gráficos resultantes nos perimitiu observar algumas tendências: 
-\begin{itemize}
-	\item O valor do incremento de prova do bitrate ($w$) é o fator de maior impacto nas qualidades observadas. 
-	\item O tamanho mínimo do buffer impacta diretamente a quantidade de pausas sofridas pela execução, especialmente em valores mais altos de $w$.
-\end{itemize}
-Para análise os dados foram separados em duas categorias de acordo com a ocorrência de pausas na execução.Em ambos os grupos alfuns fatores ficaram evidentes:
-\begin{itemize}
-	\item A qualidade da conexão impactou diretamente os índices de qualidade.
-	\item Inicialmente o algoritmo permanece em uma qualidade média-baixa(normalmente na região de 6) até o buffer ser preenchido, quando começa a sentir um impacto maior da qualidade da conexão.
-\end{itemize}
-
-No grupo onde houve ocorrência de pausas é possível analisar a correlação entre o tamanho do buffer e as falhas como evidenciado na Tabela \ref{table:1}, visível nos testes com $w$ igual a 0.3, 0.35, 0.4 e  0.5. É evidente que a necessidade de bufferização cresce de acordo com o valor do incremento de prova de bitrate. É visível ainda que este grupo é composto somente por elementos com valores menores de b\_min, e com $w$ acima de 0.1. Isso é validado pelo comportamento da  
-constante de incremento d eprova do bitrate, que pelo valor menor assumido, diminui a taxa de crescimento da qualidade, impedindo-a de atingir valores maiores e favorecendo o buffering de quadros.
-
-No grupo onde não foram identificadas pausas, como mostrado na Tabela \ref{table:2} fica clara a relação entre o tamanho escolhido para b\_min e a qualidade a ser baixada. Com um buffer mínimo maior o algoritmo prioritiza qualidades menores, dedicando a banda ao preenchimento do buffer, resultando diretamente num tempo menor de download. Isso é evidente para todos os valores da constante de incremento ($w$) e é perceptível também analisando-se os gráficos. Os valores máximos de qualidade também são afetados pela quantidade de seguimentos a serem bufferizados, com a qualidade máxima encontrada nos resultados tendendo a ser menor em testes com b\_min maiores. É importante notar que em alguns casos o Q\_max é afetado por picos de largura de banda que duram poquíssimo tempo, ainda mais nos conjuntos de testes com $w$ maiores. 
-
-Nos gráficos mostrados é possível notar a diferença que o tamanho do buffer causa na duração do download e na qualidade. \ref{fig:1}\ref{fig:3}
-\begin{figure}
-	\centering
-	\includegraphics[width=\linewidth]{0.35 - 35 - qual.png}
-	\caption{Gráfico de qualidade: $w$ = 35, $B_{min}$ = 35}
-	\label{fig:1}
-\end{figure}
-\begin{figure}
-	\centering
-	\includegraphics[width=\linewidth]{0.358 -35 -throughput.png}
-	\caption{Gráfico de troughput: $w$ = 35, $B_{min}$ = 35}
-	\label{fig:2}
-\end{figure}
-\begin{figure}
-	\centering
-	\includegraphics[width=\linewidth]{0.35 - 50 - qual.png}
-	\caption{Gráfico de qualidade: $w$ = 35, $B_{min}$ = 50}
-	\label{fig:3}
-\end{figure}
-\begin{figure}
-	\centering
-	\includegraphics[width=\linewidth]{0.35 - 50 - Throughput .png}
-	\caption{Gráfico de troughput: $w$ = 35, $B_{min}$ = 50}
-	\label{fig:4}
-\end{figure}
-
-\begin{table}[]
-	\centering
-	\begin{tabular}{c|c|c|c}
-		$w$ & $B_{min}$ & Nº(med) de pausas & Tempo de execução  \\
-		\hline
-		0.3 & 13 & 10 & 233.33 \\
-		0.3 & 26 & 4.333 & 160 \\
-		\hline
-		0.35 &	13&	6.33 & 163.33 \\
-		0.35 & 20 &	2&	130 \\
-		0.35 & 26 & 2 & 106 \\
-		\hline
-		0.45 & 13 &	19.33 & 883.33\\
-		0.45 & 20 & 9 &	466.66\\
-		0.45 & 26 & 1 & 110 \\
-		\hline
-		0.5 & 13 & 15 & 366.66\\
-		0.5 & 20 & 8 & 183.33\\
-		0.5 & 26 & 4.33 & 151.66\\
-		\hline
-		0.6	& 13 & 25 & 1600\\	
-		0.6	& 20 & 3 & 126.66 \\
-		0.6	& 26 & 3.33 & 266.66 \\
-	\end{tabular}
-	\caption{Tempo de execução e número de pausas}
-	\label{table:1}
-\end{table}
-\begin{table}[]
-	\centering
-	\begin{tabular}{c|c|c|c}
-		$w$ & $B_{min}$  & Tempo de execução & $Q_{max}$ médio \\
-		\hline
-		0.1 & 13 & 61.66 & 11.3\\
-		0.1 & 20 & 66.66 & 11\\
-		0.1 & 26 & 61.66 & 12\\
-		0.1 & 35 & 56.66 & 11.3 \\
-		0.1 & 50 & 45 & 7\\
-		\hline
-		0.3 & 20 & 80 & 12\\
-		0.3 & 35 & 60 & 11\\
-		0.3 & 50 & 48.33 & 9.3\\
-		\hline
-		0.35 & 35 & 81.66 & 13.3\\
-		0.35 & 50 & 45 & 12.3\\
-		\hline
-		0.45 & 35 & 60 & 10\\
-		0.45 & 50 & 40 & 9\\
-		\hline
-		0.5 & 35 & 66.66 & 12\\
-		0.5 & 50 & 50 & 10\\
-		\hline
-		0.6 & 35 & 70 & 10\\
-		0.6 & 50 & 46.66 & 12.5\\
-	\end{tabular}
-	\caption{Tempo de download - Sem pausas}
-	\label{table:2}
-\end{table}
-\subsection{Limitador para buffer abaixo de b\_min}
-
-Com a análise de alguns gráficos da sessão anterior, junto à analise do funcionamento do algoritmo, percebemos que este às vezes podia ficar "preso" em qualidades mais altas, estourando o valor de X e Y. Estes, por serem retroalimentados, levam um certo tempo para se readequarem ao throughput. Numa rede de alta variação de banda, especialmentese em casos de uma rede de baixa velocidade média com picos até 10-15x maiores q sua velocidade comum, isso fazia com que o algoritmo ficasse algum tempo sem conseguir se readequar aos limites da conexão. Para tentar amenizar este problema foi proposto um limitador para os valores de X e Y no caso do tamanho do buffer ser inferior a buffer\_min. O limite imposto é de até 4x o valor do throughput real.
-
-Como resultado da modificação foi possível observar uma imediata queda na quantidade de pausas na execução do vídeo. Enquanto nas execuções nos diversos testes anteriores retornaram uma quantidade média de pausas de 46\% de acordo com os parâmetros, os mesmos parâmetros retornaram uma média de 23\% nos testes refeitos. A quantidade de pausas deixou de variar de até 25 pausas na execução , como visto na figra\ref{fig:6}, para um máximo de 4, como visto em \ref{fig:5} . Como desvantagem para esta versão do algortimo, nas redes variáveis usadas para teste, há uma menor tendencia a atingir os valores altos de pico previamente atingidos.
-
-Também foram realizados testes para verificação do funcionamento do algoritmo em redes estáveis. Foi percebida uma latência para que este se ajuste há qualidade real da rede, mas esta é relativa ao tamanho de buffer\_min e não costuma causar grandes prejuízos,como evidenciado nas imagens \ref{fig:7} \ref{fig:8} \ref{fig:9} \ref{fig:10}.
-
-\begin{figure}
-	\centering
-	\includegraphics[width=\linewidth]{playback_pauses.png}
-	\caption{Pior caso de pausas na execução - Com limitador}
-	\label{fig:5}
-\end{figure}
-\begin{figure}
-	\centering
-	\includegraphics[width=\linewidth]{playback_pauses_25.png}
-	\caption{Pior caso de pausas na execução - PANDA}
-	\label{fig:6}
-\end{figure}
-\begin{figure}
-	\centering
-	\includegraphics[width=\linewidth]{playback_quality_qi.png}
-	\caption{Teste de Qualidade em Baixa Restrição - Buffer mínimo em 13}
-	\label{fig:7}
-\end{figure}
-\begin{figure}
-	\centering
-	\includegraphics[width=\linewidth]{throughput.png}
-	\caption{Teste de Troughput em Baixa Restrição - Buffer mínimo em 13}
-	\label{fig:8}
-\end{figure}
-\begin{figure}
-	\centering
-	\includegraphics[width=\linewidth]{playback_quality_qi35.png}
-	\caption{Teste de Qualidade em Baixa Restrição - Buffer mínimo em 35}
-	\label{fig:9}
-\end{figure}
-
-\begin{figure}
-	\centering
-	\includegraphics[width=\linewidth]{throughput35.png}
-	\caption{Teste de Troughput em Baixa Restrição - Buffer mínimo em 35}
-	\label{fig:10}
-\end{figure}
-\section{Conclusões}
-Considerando os resultados apresentados na sessão anterior conclui-se que o algoritmo proposto satisfaz as condições esperadas de aproveitamento de banda e continuidade de reprodução, apesar de ser necessária uma escolha apropriada de parâmetros, especialmente no que toca o tamanho mínimo do buffer e o incremento de prova do bitrate, uma vez que atuam diretamente na qualidade obtida e na estabilidade da execução. 
-
-O algoritmo mostrou uma clara preferêncaia por valores maiores de tamanho mínimos do buffer quando pareado com valores maiores de $w$. A correlação entre o aumento do valores necessários para a estabilidade pode ser explicada pelo fato de que maiores valores de $w$ aumentam a instabilidade do algoritmo, fazendo com que este tenha facilidade maior de aumentar/diminuir os valores de bitrate a serem requisitados, e necessitando assim de um buffer maior para suportar estas mudanças. 
-
-A mudançam proposta para o algoritmo na tentativa de reduzir o número de pausas foi bem sucedida, reduzindo na metade o número de execuções com pausas encontrados nos mesmos testes executados previamente, ao mesmo tempo q reduziu o número máximo de pausas em uma execução de 25 para 4 pausas. 
-
-No que toca a execução do algoritmo em redes com menor alternância de valores de throughput o algoritmo performou bem, apesar de ter uma certa latência causada pelo tempo necessário para carregar o buffer no momento inicial da execução. 
-
-No geral o trabalho foi um excelente exercício sobre a complexidade de algoritmos que estão ao nosso redor e acabam passando despercebidos. O uso de streaming de vídeo, algo que faz parte do dia a dia, como exercício da matéria permitiu que tivessemos maior entendimento do funcionamento de protocolos como o DASH e como este lida com a questão do transporte contínuo de dados. A implementação de um algoritmo ABR permitiu ainda exercitar formas de lidar com situações mais reais, com variações constantes no tempo de entrega de pacotes e na forma com que a variação de largura de banda pode tornar a experiência de streaming extremamente desagradável, se não impossível.
-
-{\small
-	\bibliographystyle{ieee}
-	\bibliography{egbib}
-}
-
+	\end{lstlisting}
+	\section{Resultados}
+	\subsubsection{Ambiente de testes}
+	Para testar o funcionamento do algoritmo, foi feita uma série de testes utlizando diferentes valores de $w$ e $B_{min}$. Os valores de k, $\epsilon$, $\alpha$ e $\beta$ foram escolhidos de acordo com o valor ótimo do relatório. Os valores escolhidos para teste foram: 
+	\begin{itemize}
+		\item $w$ = 0.1, 0.3, 0.35, 0.45. 0.5, 0,6 Mb/s
+		\item $B_{min}$  = 13, 20, 26, 35, 50 segundos
+		\item k=0.14 
+		\item $\epsilon$=0.15 
+		\item $\alpha$=0.2
+		\item $\beta$=0.2
+	\end{itemize}
+	\subsection{Algoritmo PANDA}
+	Os primeiros testes realizados possuíam como objetivo determinar o comportamento do algoritmo nas diferentes combinações de $w$ e $B_{min}$ propostas, utilizando os resultados emitidos pelo pydash para análise. A rede foi configurada como "LMH" como "traffic\_shaping\_profile\_sequence" e 5 de "traffic\_shaping\_profile\_interval". Os testes foram repetidos 3 vezes para reduzir o impacto da aleatóriedade do throughput nos dados. A análise dos gráficos resultantes nos permitiu observar algumas tendências: 
+	\begin{itemize}
+		\item O valor do incremento de prova do bitrate ($w$) é o fator de maior impacto nas qualidades observadas. 
+		\item O tamanho mínimo do buffer impacta diretamente a quantidade de pausas sofridas pela execução, especialmente em valores mais altos de $w$.
+	\end{itemize}
+	Para análise, os dados foram separados em duas categorias de acordo com a ocorrência de pausas na execução. Em ambos os grupos, alguns fatores ficaram evidentes:
+	\begin{itemize}
+		\item A qualidade da conexão impactou diretamente os índices de qualidade.
+		\item Inicialmente o algoritmo permanece em uma qualidade média-baixa(normalmente na região de 6) até o buffer ser preenchido, quando começa a sentir um impacto maior da qualidade da conexão.
+	\end{itemize}
+	
+	No grupo onde houve ocorrência de pausas, é possível analisar a correlação entre o tamanho do buffer e as falhas como evidenciado na Tabela \ref{table:1}, visível nos testes com $w$ igual a 0.3, 0.35, 0.4 e  0.5 Mb/s. É evidente que a necessidade de bufferização cresce de acordo com o valor do incremento de prova de bitrate. É visível ainda que este grupo é composto somente por elementos com valores menores de $B_{min}$, e com $w$ acima de 0.1. Isso é validado pelo comportamento da  
+	constante de incremento de prova do bitrate, que pelo valor menor assumido, diminui a taxa de crescimento da qualidade, impedindo-a de atingir valores maiores e favorecendo o buffering de segmentos.
+	
+	No grupo onde não foram identificadas pausas, como mostrado na Tabela \ref{table:2}, é possível observar a relação entre o tamanho escolhido para $B_{min}$ e a qualidade a ser baixada. Com um buffer mínimo maior, o algoritmo prioriza qualidades menores, dedicando a banda ao preenchimento do buffer, resultando diretamente em um tempo menor de download. Isso é evidente para todos os valores da constante de incremento ($w$) e é perceptível também analisando-se os gráficos. Os valores máximos de qualidade também são afetados pela quantidade de seguimentos a serem bufferizados, com a qualidade máxima encontrada nos resultados tendendo a ser menor em testes com $B_{min}$ maiores. É importante notar que em alguns casos o $Q_{max}$ é afetado por picos de largura de banda que duram pouquíssimo tempo, ainda mais nos conjuntos de testes com $w$ maiores. 
+	
+	Nos gráficos mostrados, é possível notar a diferença que o tamanho do buffer causa na duração do download e na qualidade. \ref{fig:1}\ref{fig:3}
+	\begin{figure}
+		\centering
+		\includegraphics[width=\linewidth]{0.35 - 35 - qual.png}
+		\caption{Gráfico de qualidade: $w$ = 0.35, $B_{min}$ = 35}
+		\label{fig:1}
+	\end{figure}
+	\begin{figure}
+		\centering
+		\includegraphics[width=\linewidth]{0.358 -35 -throughput.png}
+		\caption{Gráfico de troughput: $w$ = 0.35, $B_{min}$ = 35}
+		\label{fig:2}
+	\end{figure}
+	\begin{figure}
+		\centering
+		\includegraphics[width=\linewidth]{0.35 - 50 - qual.png}
+		\caption{Gráfico de qualidade: $w$ = 0.35, $B_{min}$ = 50}
+		\label{fig:3}
+	\end{figure}
+	\begin{figure}
+		\centering
+		\includegraphics[width=\linewidth]{0.35 - 50 - Throughput .png}
+		\caption{Gráfico de troughput: $w$ = 0.35, $B_{min}$ = 50}
+		\label{fig:4}
+	\end{figure}
+	
+	\begin{table}[]
+		\centering
+		\begin{tabular}{c|c|c|c}
+			$w$ & $B_{min}$ & Nº(med) de pausas & Tempo de execução  \\
+			\hline
+			0.3 & 13 & 10 & 233.33 \\
+			0.3 & 26 & 4.333 & 160 \\
+			\hline
+			0.35 &	13&	6.33 & 163.33 \\
+			0.35 & 20 &	2&	130 \\
+			0.35 & 26 & 2 & 106 \\
+			\hline
+			0.45 & 13 &	19.33 & 883.33\\
+			0.45 & 20 & 9 &	466.66\\
+			0.45 & 26 & 1 & 110 \\
+			\hline
+			0.5 & 13 & 15 & 366.66\\
+			0.5 & 20 & 8 & 183.33\\
+			0.5 & 26 & 4.33 & 151.66\\
+			\hline
+			0.6	& 13 & 25 & 1600\\	
+			0.6	& 20 & 3 & 126.66 \\
+			0.6	& 26 & 3.33 & 266.66 \\
+		\end{tabular}
+		\caption{Tempo de execução e número de pausas}
+		\label{table:1}
+	\end{table}
+	\begin{table}[]
+		\centering
+		\begin{tabular}{c|c|c|c}
+			$w$ & $B_{min}$  & Tempo de execução & $Q_{max}$ médio \\
+			\hline
+			0.1 & 13 & 61.66 & 11.3\\
+			0.1 & 20 & 66.66 & 11\\
+			0.1 & 26 & 61.66 & 12\\
+			0.1 & 35 & 56.66 & 11.3 \\
+			0.1 & 50 & 45 & 7\\
+			\hline
+			0.3 & 20 & 80 & 12\\
+			0.3 & 35 & 60 & 11\\
+			0.3 & 50 & 48.33 & 9.3\\
+			\hline
+			0.35 & 35 & 81.66 & 13.3\\
+			0.35 & 50 & 45 & 12.3\\
+			\hline
+			0.45 & 35 & 60 & 10\\
+			0.45 & 50 & 40 & 9\\
+			\hline
+			0.5 & 35 & 66.66 & 12\\
+			0.5 & 50 & 50 & 10\\
+			\hline
+			0.6 & 35 & 70 & 10\\
+			0.6 & 50 & 46.66 & 12.5\\
+		\end{tabular}
+		\caption{Tempo de download - Sem pausas}
+		\label{table:2}
+	\end{table}
+	\subsection{Limitador para buffer abaixo de $B_{min}$}
+	
+	Com a análise de alguns gráficos da sessão anterior, junto à analise do funcionamento do algoritmo, percebemos que este às vezes podia ficar "preso" em qualidades mais altas, estourando o valor de X e Y. Estes, por serem retroalimentados, precisam de um certo tempo para se readequarem ao throughput. Numa rede de alta variação de banda, especialmente em casos de uma rede de baixa velocidade média com picos até 10 a 15 vezes maiores que sua velocidade comum. Isso fazia com que o algoritmo ficasse algum tempo sem conseguir se readequar aos limites da conexão. Para tentar amenizar este problema, foi proposto um limitador para os valores de X[n] e y[n] no caso do tamanho do buffer ser inferior a $B_{min}$. O limite imposto é de até 4 vezes o valor do throughput real.
+	
+	Como resultado da modificação, foi possível observar uma imediata queda na quantidade de pausas na execução do vídeo. Enquanto as execuções dos diversos testes anteriores retornaram uma quantidade média de pausas de 46\% de acordo com os parâmetros, os mesmos parâmetros retornaram uma média de 23\% nos testes refeitos. A quantidade de pausas deixou de variar de até 25 pausas na execução, como visto na figura \ref{fig:6}, para um máximo de 4, como visto em \ref{fig:5} . Como desvantagem para esta versão do algortimo, nas redes variáveis usadas para teste, há uma menor tendência a atingir os valores altos de pico previamente atingidos.
+	
+	Também foram realizados testes para verificação do funcionamento do algoritmo em redes estáveis. Foi percebida uma latência para que este se ajuste a qualidade real da rede, mas esta é relativa ao tamanho de $B_{min}$ e não costuma causar grandes prejuízos,como evidenciado nas imagens \ref{fig:7}, \ref{fig:8}, \ref{fig:9} e \ref{fig:10}.
+	
+	\begin{figure}
+		\centering
+		\includegraphics[width=\linewidth]{playback_pauses.png}
+		\caption{Pior caso de pausas na execução - Com limitador}
+		\label{fig:5}
+	\end{figure}
+	\begin{figure}
+		\centering
+		\includegraphics[width=\linewidth]{playback_pauses_25.png}
+		\caption{Pior caso de pausas na execução - PANDA}
+		\label{fig:6}
+	\end{figure}
+	\begin{figure}
+		\centering
+		\includegraphics[width=\linewidth]{playback_quality_qi.png}
+		\caption{Teste de Qualidade em Baixa Restrição - Buffer mínimo em 13}
+		\label{fig:7}
+	\end{figure}
+	\begin{figure}
+		\centering
+		\includegraphics[width=\linewidth]{throughput.png}
+		\caption{Teste de Troughput em Baixa Restrição - Buffer mínimo em 13}
+		\label{fig:8}
+	\end{figure}
+	\begin{figure}
+		\centering
+		\includegraphics[width=\linewidth]{playback_quality_qi35.png}
+		\caption{Teste de Qualidade em Baixa Restrição - Buffer mínimo em 35}
+		\label{fig:9}
+	\end{figure}
+	
+	\begin{figure}
+		\centering
+		\includegraphics[width=\linewidth]{throughput35.png}
+		\caption{Teste de Troughput em Baixa Restrição - Buffer mínimo em 35}
+		\label{fig:10}
+	\end{figure}
+	\section{Conclusões}
+	Considerando os resultados apresentados na sessão anterior, conclui-se que o algoritmo proposto satisfaz as condições esperadas de aproveitamento de banda e continuidade de reprodução, apesar de ser necessária uma escolha apropriada de parâmetros, especialmente com relação ao tamanho mínimo do buffer e o incremento de prova do bitrate, uma vez que atuam diretamente na qualidade obtida e na estabilidade da execução. 
+	
+	O algoritmo mostrou uma clara preferência por valores maiores de tamanho mínimos do buffer quando pareado com valores maiores de $w$. A correlação entre o aumento do valores necessários para a estabilidade pode ser explicada pelo fato de que maiores valores de $w$ aumentam a instabilidade do algoritmo, fazendo com que este tenha facilidade maior de aumentar/diminuir os valores de bitrate a serem requisitados, e necessitando, assim, de um buffer maior para suportar estas mudanças. 
+	
+	A mudançam proposta para o algoritmo na tentativa de reduzir o número de pausas foi bem sucedida, reduzindo na metade o número de execuções com pausas encontrados nos mesmos testes executados previamente, ao mesmo tempo que reduziu o número máximo de pausas em uma execução de 25 para 4 pausas. 
+	
+	Quanto à execução do algoritmo em redes com menor alternância de valores de throughput, o algoritmo funcionou satisfatoriamente, apesar de ter uma certa latência causada pelo tempo necessário para carregar o buffer no momento inicial da execução. 
+	
+	No geral, o trabalho foi um excelente exercício sobre a complexidade de algoritmos que estão ao nosso redor e acabam passando despercebidos. O uso de streaming de vídeo, algo que faz parte do dia a dia, como exercício da matéria permitiu que tivéssemos maior entendimento do funcionamento de protocolos como o DASH e como este lida com a questão do transporte contínuo de dados. A implementação de um algoritmo ABR permitiu ainda exercitar formas de lidar com situações mais reais, com variações constantes no tempo de entrega de pacotes e na forma com que a variação de largura de banda pode tornar a experiência de streaming extremamente desagradável, se não impossível.
+	
+	{\small
+		\bibliographystyle{ieee}
+		\bibliography{egbib}
+	}
+	
 \end{document}
-	
-	

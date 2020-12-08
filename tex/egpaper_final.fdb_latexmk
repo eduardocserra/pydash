@@ -1,12 +1,12 @@
 # Fdb version 3
-["bibtex egpaper_final"] 1607390535 "egpaper_final.aux" "egpaper_final.bbl" "egpaper_final" 1607390536
+["bibtex egpaper_final"] 1607392776 "egpaper_final.aux" "egpaper_final.bbl" "egpaper_final" 1607393091
   "./ieee.bst" 1607384895 19623 f9cd22458ca68af2567100f1aed905e8 ""
   "egbib.bib" 1607384895 206 5559c6bfab51b5566f989b0d79cc6425 ""
-  "egpaper_final.aux" 1607390536 6457 5b73bddd7d0d1d23f16b23c417b52588 "pdflatex"
+  "egpaper_final.aux" 1607393091 6476 28695bbd1353749823a6ffd0ce69f439 "pdflatex"
   (generated)
-  "egpaper_final.blg"
   "egpaper_final.bbl"
-["pdflatex"] 1607390535 "/home/eduardo/Documentos/Projetos/pydash/tex/egpaper_final.tex" "/home/eduardo/Documentos/Projetos/pydash/tex/egpaper_final.pdf" "egpaper_final" 1607390536
+  "egpaper_final.blg"
+["pdflatex"] 1607393091 "/home/eduardo/Documentos/Projetos/pydash/tex/egpaper_final.tex" "/home/eduardo/Documentos/Projetos/pydash/tex/egpaper_final.pdf" "egpaper_final" 1607393091
   "./images/0.35 - 35 - qual.png" 1607395346 15546 9fc5f745c8f8d65f275a10e4a7a10664 ""
   "./images/0.35 - 50 - Throughput .png" 1607395346 30808 00515525b3b7e9b671c9a0afd7e94794 ""
   "./images/0.35 - 50 - qual.png" 1607395346 25070 7484ac80ff1a99a95256c6a8cecd2ace ""
@@ -17,8 +17,8 @@
   "./images/playback_quality_qi35.png" 1607395346 18147 a86f772c6da54f8a0eb82868bdc79cc5 ""
   "./images/throughput.png" 1607395346 22143 08c92f9c21ed1c9796b4a1495d292e4a ""
   "./images/throughput35.png" 1607395346 26587 08dcd2dc4ad46d9da26658f19ef68215 ""
-  "/home/eduardo/Documentos/Projetos/pydash/tex/egpaper_final.aux" 1607390536 6457 5b73bddd7d0d1d23f16b23c417b52588 ""
-  "/home/eduardo/Documentos/Projetos/pydash/tex/egpaper_final.tex" 1607390534 24559 39ea4c74e17a932b4322bc2899db3fe7 ""
+  "/home/eduardo/Documentos/Projetos/pydash/tex/egpaper_final.aux" 1607393091 6476 28695bbd1353749823a6ffd0ce69f439 ""
+  "/home/eduardo/Documentos/Projetos/pydash/tex/egpaper_final.tex" 1607393090 24703 97bd1bb86aeb0cd2d38e62a64e08cda2 ""
   "/usr/share/texmf-dist/fonts/enc/dvips/base/8r.enc" 1591545468 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/share/texmf-dist/fonts/map/fontname/texfonts.map" 1591545468 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texmf-dist/fonts/tfm/adobe/courier/pcrr7t.tfm" 1591545468 960 379cc0019370a9e0208a0a3f949f847a ""
@@ -137,9 +137,9 @@
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1607207263 2514050 3c4a570c7372dd3a91c60715566a6ac5 ""
   "cvpr.sty" 1607384895 8185 dd8231e8a92c383d16b745afe2ab996b ""
   "cvpr_eso.sty" 1607384895 3878 6aa7c08ff2621006e0603349e40a30a8 ""
-  "egpaper_final.aux" 1607390536 6457 5b73bddd7d0d1d23f16b23c417b52588 "pdflatex"
-  "egpaper_final.bbl" 1607390535 223 5682c6086f2a8d90730db9810be51e76 "bibtex egpaper_final"
-  "egpaper_final.tex" 1607390534 24559 39ea4c74e17a932b4322bc2899db3fe7 ""
+  "egpaper_final.aux" 1607393091 6476 28695bbd1353749823a6ffd0ce69f439 "pdflatex"
+  "egpaper_final.bbl" 1607392776 223 5682c6086f2a8d90730db9810be51e76 "bibtex egpaper_final"
+  "egpaper_final.tex" 1607393090 24703 97bd1bb86aeb0cd2d38e62a64e08cda2 ""
   "eso-pic.sty" 1607384895 9460 d2935ae95b5cd343fcf5887ff530288d ""
   "images/0.35 - 35 - qual.png" 1607395346 15546 9fc5f745c8f8d65f275a10e4a7a10664 ""
   "images/0.35 - 50 - Throughput .png" 1607395346 30808 00515525b3b7e9b671c9a0afd7e94794 ""
@@ -152,8 +152,8 @@
   "images/throughput.png" 1607395346 22143 08c92f9c21ed1c9796b4a1495d292e4a ""
   "images/throughput35.png" 1607395346 26587 08dcd2dc4ad46d9da26658f19ef68215 ""
   (generated)
-  "egpaper_final.pdf"
-  "egpaper_final.log"
-  "/home/eduardo/Documentos/Projetos/pydash/tex/egpaper_final.pdf"
   "/home/eduardo/Documentos/Projetos/pydash/tex/egpaper_final.log"
+  "egpaper_final.pdf"
+  "/home/eduardo/Documentos/Projetos/pydash/tex/egpaper_final.pdf"
   "egpaper_final.aux"
+  "egpaper_final.log"
