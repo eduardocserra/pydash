@@ -1,0 +1,15 @@
+\begin{thebibliography}{1}\itemsep=-1pt
+
+\bibitem{li2014probe}
+Z.~Li, X.~Zhu, J.~Gahm, R.~Pan, H.~Hu, A.~C. Begen, and D.~Oran.
+\newblock Probe and adapt: Rate adaptation for http video streaming at scale.
+\newblock {\em IEEE Journal on Selected Areas in Communications},
+  32(4):719--733, 2014.
+
+\bibitem{niamut2016mpeg}
+O.~A. Niamut, E.~Thomas, L.~D'Acunto, C.~Concolato, F.~Denoual, and S.~Y. Lim.
+\newblock Mpeg dash srd: spatial relationship description.
+\newblock In {\em Proceedings of the 7th International Conference on Multimedia
+  Systems}, pages 1--8, 2016.
+
+\end{thebibliography}
