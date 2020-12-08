@@ -493,7 +493,7 @@ Isso é implementado no método handle\_segment\_size\_response da classe com o 
 	
 	O algoritmo mostrou uma clara preferência por valores maiores de tamanho mínimos do buffer quando pareado com valores maiores de $w$. A correlação entre o aumento do valores necessários para a estabilidade pode ser explicada pelo fato de que maiores valores de $w$ aumentam a instabilidade do algoritmo, fazendo com que este tenha facilidade maior de aumentar/diminuir os valores de bitrate a serem requisitados, e necessitando, assim, de um buffer maior para suportar estas mudanças. 
 	
-	A mudançam proposta para o algoritmo na tentativa de reduzir o número de pausas foi bem sucedida, reduzindo na metade o número de execuções com pausas encontrados nos mesmos testes executados previamente, ao mesmo tempo que reduziu o número máximo de pausas em uma execução de 25 para 4 pausas. 
+	A mudança proposta para o algoritmo na tentativa de reduzir o número de pausas foi bem sucedida, reduzindo na metade o número de execuções com pausas encontrados nos mesmos testes executados previamente, ao mesmo tempo que reduziu o número máximo de pausas em uma execução de 25 para 4 pausas. 
 	
 	Quanto à execução do algoritmo em redes com menor alternância de valores de throughput, o algoritmo funcionou satisfatoriamente, apesar de ter uma certa latência causada pelo tempo necessário para carregar o buffer no momento inicial da execução. 
 	
