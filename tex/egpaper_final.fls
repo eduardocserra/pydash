@@ -207,6 +207,39 @@ INPUT /usr/share/texmf-dist/tex/latex/psnfss/omlptm.fd
 INPUT /usr/share/texmf-dist/fonts/vf/adobe/times/ptmr7t.vf
 INPUT /usr/share/texmf-dist/fonts/tfm/adobe/times/ptmr8r.tfm
 INPUT /usr/share/texmf-dist/fonts/vf/adobe/times/ptmr8c.vf
+INPUT /usr/share/texmf-dist/fonts/tfm/adobe/times/ptmb7t.tfm
+INPUT /home/eduardo/Documentos/Projetos/pydash/tex/./images/0.35 - 35 - qual.png
+INPUT /home/eduardo/Documentos/Projetos/pydash/tex/./images/0.35 - 35 - qual.png
+INPUT /home/eduardo/Documentos/Projetos/pydash/tex/./images/0.35 - 35 - qual.png
+INPUT /home/eduardo/Documentos/Projetos/pydash/tex/./images/0.358 -35 -throughput.png
+INPUT /home/eduardo/Documentos/Projetos/pydash/tex/./images/0.358 -35 -throughput.png
+INPUT /home/eduardo/Documentos/Projetos/pydash/tex/./images/0.358 -35 -throughput.png
+INPUT /home/eduardo/Documentos/Projetos/pydash/tex/./images/0.35 - 50 - qual.png
+INPUT /home/eduardo/Documentos/Projetos/pydash/tex/./images/0.35 - 50 - qual.png
+INPUT /home/eduardo/Documentos/Projetos/pydash/tex/./images/0.35 - 50 - qual.png
+INPUT /home/eduardo/Documentos/Projetos/pydash/tex/./images/0.35 - 50 - Throughput .png
+INPUT /home/eduardo/Documentos/Projetos/pydash/tex/./images/0.35 - 50 - Throughput .png
+INPUT /home/eduardo/Documentos/Projetos/pydash/tex/./images/0.35 - 50 - Throughput .png
+INPUT /usr/share/texmf-dist/fonts/vf/adobe/times/ptmb7t.vf
+INPUT /usr/share/texmf-dist/fonts/tfm/adobe/times/ptmb8r.tfm
+INPUT /home/eduardo/Documentos/Projetos/pydash/tex/./images/playback_pauses.png
+INPUT /home/eduardo/Documentos/Projetos/pydash/tex/./images/playback_pauses.png
+INPUT /home/eduardo/Documentos/Projetos/pydash/tex/./images/playback_pauses.png
+INPUT /home/eduardo/Documentos/Projetos/pydash/tex/./images/playback_pauses_25.png
+INPUT /home/eduardo/Documentos/Projetos/pydash/tex/./images/playback_pauses_25.png
+INPUT /home/eduardo/Documentos/Projetos/pydash/tex/./images/playback_pauses_25.png
+INPUT /home/eduardo/Documentos/Projetos/pydash/tex/./images/playback_quality_qi.png
+INPUT /home/eduardo/Documentos/Projetos/pydash/tex/./images/playback_quality_qi.png
+INPUT /home/eduardo/Documentos/Projetos/pydash/tex/./images/playback_quality_qi.png
+INPUT /home/eduardo/Documentos/Projetos/pydash/tex/./images/throughput.png
+INPUT /home/eduardo/Documentos/Projetos/pydash/tex/./images/throughput.png
+INPUT /home/eduardo/Documentos/Projetos/pydash/tex/./images/throughput.png
+INPUT /home/eduardo/Documentos/Projetos/pydash/tex/./images/playback_quality_qi35.png
+INPUT /home/eduardo/Documentos/Projetos/pydash/tex/./images/playback_quality_qi35.png
+INPUT /home/eduardo/Documentos/Projetos/pydash/tex/./images/playback_quality_qi35.png
+INPUT /home/eduardo/Documentos/Projetos/pydash/tex/./images/throughput35.png
+INPUT /home/eduardo/Documentos/Projetos/pydash/tex/./images/throughput35.png
+INPUT /home/eduardo/Documentos/Projetos/pydash/tex/./images/throughput35.png
 INPUT /usr/share/texmf-dist/fonts/tfm/adobe/times/ptmr7t.tfm
 INPUT /home/eduardo/Documentos/Projetos/pydash/tex/egpaper_final.bbl
 INPUT /home/eduardo/Documentos/Projetos/pydash/tex/egpaper_final.bbl
