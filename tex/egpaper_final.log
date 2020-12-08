@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/Arch Linux) (preloaded format=pdflatex 2020.12.3)  7 DEC 2020 20:49
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/Arch Linux) (preloaded format=pdflatex 2020.12.3)  7 DEC 2020 23:00
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -442,35 +442,42 @@ Underfull \hbox (badness 1655) in paragraph at lines 55--56
 \OT1/ptm/m/n/10 a con-ti-nui-dade da trans-miss[]ao, de forma que mesmo
  []
 
-(./egpaper_final.bbl)
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 78.
- [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
+<dash.png, id=6, 1027.84pt x 351.3125pt>
+File: dash.png Graphic file (type png)
+<use dash.png>
+Package pdftex.def Info: dash.png  used on input line 62.
+(pdftex.def)             Requested size: 236.39822pt x 80.80017pt.
+[1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
 
+
+ <./dash.png>]
+(./egpaper_final.bbl)
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 90.
+ [2
 
 ]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 78.
-
-(./egpaper_final.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 78.
-Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 78.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 78.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 90.
+ (./egpaper_final.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 90.
+Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 90.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 90.
  ) 
 Here is how much of TeX's memory you used:
- 8515 strings out of 480478
- 127643 string characters out of 5905959
- 409917 words of memory out of 5000000
- 24362 multiletter control sequences out of 15000+600000
- 550794 words of font info for 62 fonts, out of 8000000 for 9000
+ 8540 strings out of 480478
+ 127961 string characters out of 5905959
+ 410917 words of memory out of 5000000
+ 24382 multiletter control sequences out of 15000+600000
+ 552420 words of font info for 64 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 38i,9n,43p,706b,348s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 38i,9n,43p,806b,348s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texmf-dist/fon
 ts/type1/urw/courier/ucrr8a.pfb></usr/share/texmf-dist/fonts/type1/urw/times/ut
 mb8a.pfb></usr/share/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/te
 xmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on egpaper_final.pdf (1 page, 53969 bytes).
+Output written on egpaper_final.pdf (2 pages, 236514 bytes).
 PDF statistics:
- 42 PDF objects out of 1000 (max. 8388607)
- 34 compressed objects within 1 object stream
- 9 named destinations out of 1000 (max. 500000)
- 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 52 PDF objects out of 1000 (max. 8388607)
+ 41 compressed objects within 1 object stream
+ 11 named destinations out of 1000 (max. 500000)
+ 6 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -54,9 +54,21 @@
 	
 	Um dos aspectos mais relevantes sobre \textit{streaming} é a continuidade da transmissão, de forma que mesmo que seja necessário uma redução na qualidade da mídia sendo recebida, ainda seja possível continuar sem que haja interrupções na entrega. Para que esse requisito seja cumprido, é necessário que servidor e cliente consigam trocar pacotes de forma adaptativa, isto é, de acordo com a velocidade que a conexão entre eles permite. Aqui apresentamos uma das possíveis implementações para esta entrega adaptativa entre servidor e cliente (DASH é um acrônimo para \textit{Dynamic Adaptative Streaming over HTTP}).
 	
-	Para a implementação do projeto, usamos como base o trabalho \textit{Probe and Adapt}\cite{li2014probe}.
+	No protocolo DASH tem-se um servidor de arquivos com a mídia disponível em diferentes tamanho de segmento e bitrate, e ao cliente cabe o cálculo de qual segmento requisitar. Isso torna o custo de disponibilidade muito baixo, uma vez que não há o custo do servidor decidir qual o arquivo o cliente deverá receber.
+	
+	\begin{figure}[H]
+		
+		\centering
+		\includegraphics[scale=0.23]{{dash.png}}
+		\caption{Esquemático do protocolo DASH}
+	\end{figure}
 	
 	
+	Para a implementação do projeto, usamos como base o trabalho \textit{Probe and Adapt}\cite{li2014probe}. \textbf{adicionar breve motivação}
+	
+	Um dos grandes problemas da maior parte dos HAS é sua dificuldade em competir na rede com outros serviços provendo outros \textit{streamings}, onde a variação muito brusca do bitrate pode levar a uma má experiência de usuário e é bastante comum em HAS's compartilhando um mesmo \textit{link}. Este problema não é incidental e é decorrente do fato que estes outros algoritmos definem que o valor de Download corrente observado pelo cliente é tomado como a porcentagem de banda que ele tem disponível\cite{li2014probe}. O que não é necessariamente verdade.
+	
+	Ao invés de confiar apenas na informação recebida pelo cliente o trabalho de Li propõe uma solução baseada em "prova e adaptação", aqui a taxa de download do TCP é tomada como entrada, apenas quando for um indicador acurado da parcela justa da banda\cite{li2014probe}. Essa situação só ocorre caso a rede não esteja congestionada. Quando há tráfego limitante na rede, ou seja, quando há intervalos maiores entre as respostas, então o algoritmo submete varias provas à banda da rede para tentar prever qual a melhor taxa de transmissão. Com essa abordagem não é necessário constantes trocas de bitrate ao longo da transmissão uma vez que o algoritmo constantemente verifica qual o melhor bitrate de envio apenas analisando o tráfego da rede.
 	%------------------------------------------------------------------------
 	
 	%------------------------------------------------------------------------
