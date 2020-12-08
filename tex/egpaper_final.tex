@@ -38,6 +38,7 @@
   stringstyle=\color{mymauve},     % string literal style
 }
 
+
 % Pages are numbered in submission mode, and unnumbered in camera-ready
 %\ifcvprfinal\pagestyle{empty}\fi
 \setcounter{page}{1}
@@ -50,17 +51,26 @@
 	
 	\author{
 		Manoel Vieira C Neto\\ 
-		Matrícula 180137816\\
+		Matrícula 18/0137816\\
+		\and
+		% adicionar os outros
+	}
+
+	\author{
+		Eduardo Castro Serra\\ 
+		Matrícula 16/0005256\\
+		\and
+		% adicionar os outros
+	}
+
+	\author{
+		Matheus Siade Ferreira\\ 
+		Matrícula 16/0036691\\
 		{\tt\small vieiranetoc@gmail.com}
 		\and
 		% adicionar os outros
 	}
 	\maketitle
-	
-	\begin{abstract}
-		
-		
-	\end{abstract}
 	
 	\section{Objetivos}
 	Tem-se como objetivo do trabalho apresentado aqui implementar uma solução possa tornar possível o \textit{streaming} dentro dos conceitos da técnica MPEG-DASH. Como base teórica para a implementação proposta, usou-se como base outros trabalhos acerca do assunto para que se pudesse alcançar o resultado\cite{li2014probe}. 
@@ -82,7 +92,7 @@
 	\end{figure}
 	
 	
-	Para a implementação do projeto, usamos como base o trabalho \textit{Probe and Adapt}\cite{li2014probe}. \textbf{adicionar breve motivação}
+	Para a implementação do projeto, usamos como base o trabalho \textit{Probe and Adapt}\cite{li2014probe}. Nele é apresentado um algoritmo com bom desempenho em relação à oscilações na rede e também à streaming de vídeos com qualidade satisfatória. Essas características são fatores importantes para a solução que será apresentada.
 	
 	Um dos grandes problemas da maior parte dos HAS é sua dificuldade em competir na rede com outros serviços provendo outros \textit{streamings}, onde a variação muito brusca do bitrate pode levar a uma má experiência de usuário e é bastante comum em HAS's compartilhando um mesmo \textit{link}. Este problema não é incidental e é decorrente do fato que estes outros algoritmos definem que o valor de Download corrente observado pelo cliente é tomado como a porcentagem de banda que ele tem disponível\cite{li2014probe}. O que não é necessariamente verdade.
 	
