@@ -277,7 +277,7 @@ Com essas duas taxas calculadas, o tempo entre requisições foi definido como:
 Esse é o T[n] utilizado na equação \ref{target_throughput}. Na implementação isso é calculado no método handle\_segment\_size\_response da classe com o código:
 
 \begin{lstlisting}[language=python]
-	target_inter_time = msg.get_bit_length() * self.seg_duration / self.calc_throughputs[-1] + beta * (
+	target_inter_time = msg.get_bit_length() * self.seg_duration / self.smooth_throughputs[-1] + beta * (
 	B - buffer_min)
 	actual_inter_time = time.perf_counter() - self.request_time
 	
@@ -300,7 +300,7 @@ No início do algoritmo alguns valores não estão definidos e por isso eles sã
 A taxa de transferência alvo e a filtrada são iguais à real no momento da inicialização e são obtidas usando o tamanho do arquivo mpd e o tempo necessário para transferir esse arquivo. No código elas são obtidas no método handle\_xml\_response da seguinte forma:
 
 \begin{lstlisting}[language=python]
-	if len(self.throughputs) == 0:
+if len(self.throughputs) == 0:
 	self.throughputs.append(msg.get_bit_length() / t)
 	self.calc_throughputs.append(msg.get_bit_length() / t)
 	self.smooth_throughputs.append(msg.get_bit_length() / t)
@@ -478,7 +478,7 @@ Isso é implementado no método handle\_segment\_size\_response da classe com o 
 	\section{Conclusões}
 	Considerando os resultados apresentados na sessão anterior, conclui-se que o algoritmo proposto satisfaz as condições esperadas de aproveitamento de banda e continuidade de reprodução, apesar de ser necessária uma escolha apropriada de parâmetros, especialmente com relação ao tamanho mínimo do buffer e o incremento de prova do bitrate, uma vez que atuam diretamente na qualidade obtida e na estabilidade da execução. 
 	
-	O algoritmo mostrou uma clara preferência por valores maiores de tamanho mínimos do buffer quando pareado com valores maiores de $w$. A correlação entre o aumento do valores necessários para a estabilidade pode ser explicada pelo fato de que maiores valores de $w$ aumentam a instabilidade do algoritmo, fazendo com que este tenha facilidade maior de aumentar/diminuir os valores de bitrate a serem requisitados, e necessitando, assim, de um buffer maior para suportar estas mudanças. 
+	O algoritmo mostrou uma clara preferência por valores maiores de tamanho mínimos do buffer quando pareado com valores maiores de $w$. A correlação entre o aumento do valores necessários para a estabilidade pode ser explicada pelo fato de que maiores valores de $w$ tornam o algoritmo mais suscetível à instabilidade da rede, por ter maior facilidade de aumentar ou diminuir os valores de bitrate a serem requisitados, e necessitando, assim, de um buffer maior para suportar estas mudanças. 
 	
 	A mudança proposta para o algoritmo na tentativa de reduzir o número de pausas foi bem sucedida, reduzindo na metade o número de execuções com pausas encontrados nos mesmos testes executados previamente, ao mesmo tempo que reduziu o número máximo de pausas em uma execução de 25 para 4 pausas. 
 	
